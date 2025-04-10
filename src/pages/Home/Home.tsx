@@ -201,21 +201,15 @@ const Home = () => {
                 </div>
             </section>
             <section className={styles.project_wraper}>
-
                 <div className="flex flex-col items-center mb-6 animate-bounce">
                     <div className="w-[1px] h-6 bg-cyan-300 mb-1" />
                     <div className="w-2 h-2 rounded-full bg-cyan-300" />
                 </div>
-
-
                 <h2 className={styles.project_title}>Works</h2>
                 <p className={styles.project_content}>
                     I had the pleasure of working with these awesome projects
                 </p>
-
-
                 <div className="flex items-center gap-6 relative">
-
                     <button className="w-10 h-10 rounded-full bg-gray-700 hover:bg-cyan-500 flex items-center justify-center text-white text-xl">
                         &#8592;
                     </button>

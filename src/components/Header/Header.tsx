@@ -1,7 +1,9 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import Container from "../Container/Container";
+
 import Home from "../../pages/Home/Home";
 import styles from "./Header.module.css";
+
 
 const Header = () => {
     return (
@@ -23,6 +25,7 @@ const Header = () => {
                         <NavLink
                             className={({ isActive, isPending }) =>
                                 isPending ? styles.nav_link : isActive ? styles.nav_link_active : ""
+
                             }
                             to="/contacts"
                         >

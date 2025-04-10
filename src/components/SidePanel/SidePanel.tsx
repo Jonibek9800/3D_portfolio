@@ -1,8 +1,10 @@
 import { useState } from "react";
 import styles from "./SidePanel.module.css";
 
+
 const SidePanel = ({ classes }: { classes: string }) => {
     const [active, setActive] = useState("1");
+
 
     const handleSetActive = (e) => {
         setActive(e.target.id);
