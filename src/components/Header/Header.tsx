@@ -1,20 +1,22 @@
 import { NavLink, Route, Routes } from "react-router-dom";
 import Container from "../Container/Container";
-import { Input } from "antd";
+
 import Home from "../../pages/Home/Home";
+import styles from "./Header.module.css";
+
 
 const Header = () => {
     return (
         <>
             <Container>
-                <header className="h-[100px] flex items-center justify-between text-white border-b-1 border-b-gray-400">
-                    <h4 className="font-medium text-2xl">
-                        <i className="text-blue-400">{`<C/>`}</i> Mahmudov J
+                <header className={styles.header_wrap}>
+                    <h4 className={styles.header_title}>
+                        <i className={styles.logo_wrap}>{`<C/>`}</i> Mahmudov J
                     </h4>
-                    <nav className="flex justify-between w-[150px]">
+                    <nav className={styles.navbar}>
                         <NavLink
                             className={({ isActive, isPending }) =>
-                                isPending ? "text-gray-400" : isActive ? "text-sky-500" : ""
+                                isPending ? styles.nav_link : isActive ? styles.nav_link_active : ""
                             }
                             to="/"
                         >
@@ -22,31 +24,32 @@ const Header = () => {
                         </NavLink>
                         <NavLink
                             className={({ isActive, isPending }) =>
-                                isPending ? "text-gray-400" : isActive ? "text-sky-500" : ""
+                                isPending ? styles.nav_link : isActive ? styles.nav_link_active : ""
+
                             }
                             to="/contacts"
                         >
                             Contacts
                         </NavLink>
                     </nav>
-                    <div className="flex w-[150px] justify-between">
+                    <div className={styles.social_wrap}>
                         <a href="/">
                             <img
-                                className="h-[34px]"
+                                className={styles.social_icon}
                                 src="./src/assets/icons/github-logo.png"
                                 alt="github"
                             />
                         </a>
                         <a href="/">
                             <img
-                                className="h-[34px]"
+                                className={styles.social_icon}
                                 src="./src/assets/icons/instagram.png"
                                 alt="instagram"
                             />
                         </a>
                         <a href="/">
                             <img
-                                className="h-[34px]"
+                                className={styles.social_icon}
                                 src="./src/assets/icons/telegram.png"
                                 alt="telegram"
                             />

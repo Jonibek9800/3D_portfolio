@@ -2,15 +2,15 @@ import { Canvas } from "@react-three/fiber";
 import SidePanel from "../../components/SidePanel/SidePanel";
 import { Mail } from "lucide-react";
 import { Sky, Stars } from "@react-three/drei";
+import Container from "../../components/Container/Container";
 import HackerRoom from "../../components/HackerRoom/HackerRoom";
 import styles from "./Home.module.css";
 import SkillBox from "../../components/SkillBox/SkillBox";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import Footer from "../../components/Footer/Footer";
-import { learningInfo } from "../../utils/constants";
+import { ILearningInfo, learningInfo } from "../../utils/constants";
 import { Suspense } from "react";
 import DevCardWithSuspense from "../../components/DevCard/DevCard";
-import Container from "../../components/Container/Container";
 
 const Home = () => {
     return (
@@ -72,7 +72,7 @@ const Home = () => {
                     </div>
 
                     <div className={styles.info_right_block_wrap}>
-                        {learningInfo.map((item) => {
+                        {learningInfo.map((item: ILearningInfo) => {
                             return (
                                 <div className={styles.right_block_item_wrap} key={item.id}>
                                     <div className={styles.item_count}>{item.count}</div>
@@ -180,11 +180,11 @@ const Home = () => {
                             />
                             <pointLight position={[10, 10, 10]} />
                             <Stars
-                                radius={100} // Радиус сферы звёзд
-                                depth={50} // Глубина звёздного поля
-                                count={5000} // Количество звёзд
-                                factor={4} // Размер звёзд
-                                saturation={0} // Насыщенность цвета
+                                radius={100}
+                                depth={50}
+                                count={5000}
+                                factor={4}
+                                saturation={0}
                                 fade
                             />
                             <ambientLight intensity={0.5} />
@@ -201,21 +201,15 @@ const Home = () => {
                 </div>
             </section>
             <section className={styles.project_wraper}>
-                {/* Скролл-индикатор */}
                 <div className="flex flex-col items-center mb-6 animate-bounce">
                     <div className="w-[1px] h-6 bg-cyan-300 mb-1" />
                     <div className="w-2 h-2 rounded-full bg-cyan-300" />
                 </div>
-
-                {/* Заголовок */}
                 <h2 className={styles.project_title}>Works</h2>
                 <p className={styles.project_content}>
                     I had the pleasure of working with these awesome projects
                 </p>
-
-                {/* Контент */}
                 <div className="flex items-center gap-6 relative">
-                    {/* Стрелка влево */}
                     <button className="w-10 h-10 rounded-full bg-gray-700 hover:bg-cyan-500 flex items-center justify-center text-white text-xl">
                         &#8592;
                     </button>

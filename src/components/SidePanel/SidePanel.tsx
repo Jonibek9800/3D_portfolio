@@ -1,30 +1,25 @@
 import { useState } from "react";
+import styles from "./SidePanel.module.css";
+
 
 const SidePanel = ({ classes }: { classes: string }) => {
     const [active, setActive] = useState("1");
 
-    interface HandleSetActiveEvent extends React.MouseEvent<HTMLAnchorElement> {
-        target: HTMLAnchorElement & EventTarget;
-    }
 
-    const handleSetActive = (e: HandleSetActiveEvent): void => {
+    const handleSetActive = (e) => {
         setActive(e.target.id);
     };
 
     return (
-        <div
-            style={{ marginTop: 40, marginLeft: 75 }}
-            className={`z-10 w=[64px] h-[376px] flex flex-col justify-between  ${classes} border-2 border-white rounded-[40px]`}
-        >
+        <div className={`${styles.side_panel_wrap} ${classes}`}>
             <a
                 onClick={handleSetActive}
-                style={{ padding: 10, margin: 2 }}
                 id="1"
-                className={active === "1" ? "bg-white rounded-[50%]" : "cursor-pointer"}
+                className={active === "1" ? styles.active_link : styles.side_panel_item}
                 href="#"
             >
                 <img
-                    className="h-[24px]"
+                    className={styles.link_img}
                     src={
                         active === "1"
                             ? "./src/assets/icons/icon-grid.png"
@@ -35,13 +30,12 @@ const SidePanel = ({ classes }: { classes: string }) => {
             </a>
             <a
                 onClick={handleSetActive}
-                style={{ padding: 10, margin: 2 }}
                 id="2"
-                className={active === "2" ? "bg-white rounded-[50%]" : "cursor-pointer"}
+                className={active === "2" ? styles.active_link : styles.side_panel_item}
                 href="#"
             >
                 <img
-                    className="h-[24px]"
+                    className={styles.link_img}
                     src={
                         active === "2"
                             ? "./src/assets/icons/icon-user-b.png"
@@ -52,13 +46,12 @@ const SidePanel = ({ classes }: { classes: string }) => {
             </a>
             <a
                 onClick={handleSetActive}
-                style={{ padding: 10, margin: 2 }}
                 id="3"
-                className={active === "3" ? "bg-white rounded-[50%]" : "cursor-pointer"}
+                className={active === "3" ? styles.active_link : styles.side_panel_item}
                 href="#"
             >
                 <img
-                    className="h-[24px]"
+                    className={styles.link_img}
                     src={
                         active === "3"
                             ? "./src/assets/icons/icon-code-b.png"
@@ -69,13 +62,12 @@ const SidePanel = ({ classes }: { classes: string }) => {
             </a>
             <a
                 onClick={handleSetActive}
-                style={{ padding: 10, margin: 2 }}
                 id="4"
-                className={active === "4" ? "bg-white rounded-[50%]" : "cursor-pointer"}
+                className={active === "4" ? styles.active_link : styles.side_panel_item}
                 href="#"
             >
                 <img
-                    className="h-[24px]"
+                    className={styles.link_img}
                     src={
                         active === "4"
                             ? "./src/assets/icons/icon-monitor-b.png"
@@ -86,13 +78,12 @@ const SidePanel = ({ classes }: { classes: string }) => {
             </a>
             <a
                 onClick={handleSetActive}
-                style={{ padding: 10, margin: 2 }}
                 id="5"
-                className={active === "5" ? "bg-white rounded-[50%]" : "cursor-pointer"}
+                className={active === "5" ? styles.active_link : styles.side_panel_item}
                 href="#"
             >
                 <img
-                    className="h-[24px]"
+                    className={styles.link_img}
                     src={
                         active === "5"
                             ? "./src/assets/icons/icon-edit-b.png"
@@ -103,13 +94,12 @@ const SidePanel = ({ classes }: { classes: string }) => {
             </a>
             <a
                 onClick={handleSetActive}
-                style={{ padding: 10, margin: 2 }}
                 id="6"
-                className={active == "6" ? "bg-white rounded-[50%]" : "cursor-pointer"}
+                className={active == "6" ? styles.active_link : styles.side_panel_item}
                 href="#"
             >
                 <img
-                    className="h-[24px]"
+                    className={styles.link_img}
                     src={
                         active === "6"
                             ? "./src/assets/icons/icon-mail-b.png"

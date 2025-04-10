@@ -1,4 +1,12 @@
-export const learningInfo = [
+
+export interface ILearningInfo {
+    id: number;
+    count: number;
+    name: string;
+}
+
+
+export const learningInfo: ILearningInfo[] = [
     { id: 1, count: 1, name: "Programming Language" },
     {
         id: 2,
