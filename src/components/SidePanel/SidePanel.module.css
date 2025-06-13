@@ -1,0 +1,35 @@
+.side_panel_wrap {
+    margin-top: 40px;
+    margin-left: 75px;
+    z-index: 10;
+    height: 376px;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    border: 2px solid white;
+    border-radius: 40px;
+
+    .side_panel_item {
+        padding: 10px;
+        margin: 2px;
+        cursor: pointer;
+    }
+    .active_link {
+        background-color: white;
+        border-radius: 50%;
+        padding: 10px;
+        margin: 2px;
+        cursor: pointer;
+    }
+
+    .link_img {
+        height: 24px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .side_panel_wrap {
+        display: none;
+    }
+}

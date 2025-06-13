@@ -1,0 +1,37 @@
+.header_wrap {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    border-bottom: 1px solid #99a1af;
+    padding: 0px 10px;
+    .header_title {
+        font-weight: 400;
+        font-size: 32px;
+        .logo_wrap {
+            color: #53eafd;
+        }
+    }
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        width: 150px;
+
+        .nav_link {
+            color: #99a1af;
+        }
+        .nav_link_active {
+            color: #53eafd;
+        }
+    }
+    .social_wrap {
+        display: flex;
+        width: 150px;
+        justify-content: space-between;
+
+        .social_icon {
+            height: 34px;
+        }
+    }
+}
