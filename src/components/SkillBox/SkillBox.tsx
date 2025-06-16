@@ -68,20 +68,20 @@ const SkillBox = ({
     });
 
     return (
-        <Float speed={0.6} rotationIntensity={3} floatIntensity={8}>
-            <group
-                ref={groupRef}
-                scale={scale}
-                position={position}
-                rotation={rotation}
-                onPointerOver={() => setHovered(true)}
-                onPointerOut={() => setHovered(false)}
-            >
-                {/* Сфера */}
-                {scene ? (
-                    <group>
-                        <primitive object={scene} />
-                        {/* <EffectComposer>
+        // <Float speed={0.6} rotationIntensity={3} floatIntensity={8}>
+        <group
+            ref={groupRef}
+            scale={scale}
+            position={position}
+            rotation={rotation}
+            onPointerOver={() => setHovered(true)}
+            onPointerOut={() => setHovered(false)}
+        >
+            {/* Сфера */}
+            {scene ? (
+                <group>
+                    <primitive object={scene} />
+                    {/* <EffectComposer>
                             <Bloom
                                 intensity={1.5}
                                 luminanceThreshold={0}
@@ -89,35 +89,34 @@ const SkillBox = ({
                                 height={300}
                             />
                         </EffectComposer> */}
-                    </group>
-                ) : (
-                    <group>
-                        <mesh position={[0, 0.5, 0]}>
-                            <sphereGeometry args={[0.5, 8, 8]} />
-                            <meshStandardMaterial
-                                transparent
-                                emissive={glow ? "#ffaa00" : "#4a8f94"}
-                                emissiveIntensity={glow ? 1.5 : 0.5}
-                                toneMapped={false}
-                            />
-                        </mesh>
+                </group>
+            ) : (
+                <group>
+                    <mesh position={[0, 0.5, 0]}>
+                        <sphereGeometry args={[0.5, 8, 8]} />
+                        <meshStandardMaterial
+                            transparent
+                            emissive={glow ? "#ffaa00" : "#4a8f94"}
+                            emissiveIntensity={glow ? 1.5 : 0.5}
+                            toneMapped={false}
+                        />
+                    </mesh>
 
-                        <mesh position={[0, 0.5, 0.5 + 0.01]}>
-                            <planeGeometry args={[0.6, 0.6]} />
-                            <meshStandardMaterial map={texture} transparent />
-                        </mesh>
-                    </group>
-                )}
-                {/* Название навыка — показывается только при наведении */}
-                {hovered && (
-                    <Html position={[0, 1.2, 0]}>
-                        <div className="text-white text-sm bg-black/70 px-2 py-1 rounded text-nowrap">
-                            {skillName}
-                        </div>
-                    </Html>
-                )}
-            </group>
-        </Float>
+                    <mesh position={[0, 0.5, 0.5 + 0.01]}>
+                        <planeGeometry args={[0.6, 0.6]} />
+                        <meshStandardMaterial map={texture} transparent />
+                    </mesh>
+                </group>
+            )}
+            {/* Название навыка — показывается только при наведении */}
+            {hovered && (
+                <Html position={[0, 1.2, 0]}>
+                    <div className="text-white text-sm bg-black/70 px-2 py-1 rounded text-nowrap">
+                        {skillName}
+                    </div>
+                </Html>
+            )}
+        </group>
     );
 };
 
