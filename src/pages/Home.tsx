@@ -12,6 +12,7 @@ import SkillBox from "../components/SkillBox/SkillBox";
 import { learningInfo } from "../utils/constans";
 import styles from "./Home.module.css";
 import RotatingGroup from "../components/RotationGroup/RotationGroup";
+import { useNavigate } from "react-router-dom";
 
 const skillModels = [
     { url: "/HTML.glb", key: "htmlScene" },
@@ -24,6 +25,7 @@ const skillModels = [
 ];
 
 const Home = () => {
+    const navigate = useNavigate();
     const scenes = Object.fromEntries(skillModels.map(({ url, key }) => [key, useGLTF(url).scene]));
 
     return (
@@ -164,6 +166,7 @@ const Home = () => {
                                 <RotatingGroup speed={0.004}>
                                     <>
                                         <SkillBox
+                                            onClick={() => navigate("/css")}
                                             emmisivColor="#72118c"
                                             glow
                                             scene={scenes.cssScene}

@@ -1,16 +1,16 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Html } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
+import { Suspense, useEffect, useRef, useState } from "react";
 import {
-    TextureLoader,
     ClampToEdgeWrapping,
-    Group,
-    Vector3,
+    Color,
     Euler,
     EulerOrder,
-    Color,
+    Group,
     Mesh,
+    TextureLoader,
+    Vector3,
 } from "three";
-import { Float, Html } from "@react-three/drei";
 
 type Props = {
     textureUrl: string;
@@ -21,6 +21,7 @@ type Props = {
     scale: any;
     scene?: any;
     emmisivColor?: string;
+    onClick?: () => void;
 };
 
 const SkillBox = ({
@@ -32,6 +33,7 @@ const SkillBox = ({
     scale,
     scene,
     emmisivColor,
+    onClick,
 }: Props) => {
     const texture = useLoader(TextureLoader, textureUrl);
     const groupRef = useRef<Group>(null);
@@ -70,6 +72,7 @@ const SkillBox = ({
     return (
         // <Float speed={0.6} rotationIntensity={3} floatIntensity={8}>
         <group
+            onClick={onClick}
             ref={groupRef}
             scale={scale}
             position={position}
@@ -129,6 +132,7 @@ const SkillBoxWithSuspence = ({
     scale,
     scene,
     emmisivColor,
+    onClick,
 }: Props) => {
     return (
         <Suspense
@@ -139,6 +143,7 @@ const SkillBoxWithSuspence = ({
             }
         >
             <SkillBox
+                onClick={onClick}
                 emmisivColor={emmisivColor}
                 scene={scene}
                 scale={scale}
