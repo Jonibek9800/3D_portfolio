@@ -5,9 +5,9 @@ import CssGamePlatform from "./pages/CssGamePlatform/CssGamePlatform";
 function App() {
     return (
         <div>
-            <Routes>
+            {/* <Routes>
                 <Route path="/css" element={<CssGamePlatform />} />
-            </Routes>
+            </Routes> */}
             <Header />
         </div>
     );

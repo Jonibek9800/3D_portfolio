@@ -4,33 +4,35 @@ import { useRef } from "react";
 import * as THREE from "three";
 import { Suspense } from "react";
 
-const DevCard = () => {
+const DevCard = (props) => {
     const cardRef = useRef(null);
     const targetRotation = useRef([0, 0]);
     const { nodes, materials } = useGLTF("/card.glb");
     const materialRef = useRef(null);
 
-    useFrame((state) => {
+    useFrame((state, delta) => {
         const [targetX, targetY] = targetRotation.current;
 
         if (cardRef.current) {
+            cardRef.current.rotation.y += delta * 0.7;
             // Плавно интерполируем текущий поворот к целевому
-            cardRef.current.rotation.x = THREE.MathUtils.lerp(
-                cardRef.current.rotation.x,
-                targetX,
-                0.1
-            );
+            // cardRef.current.rotation.x = THREE.MathUtils.lerp(
+            //     cardRef.current.rotation.x,
+            //     targetX,
+            //     0.1
+            // );
 
-            cardRef.current.rotation.y = THREE.MathUtils.lerp(
-                cardRef.current.rotation.y,
-                targetY,
-                0.1
-            );
+            // cardRef.current.rotation.y = THREE.MathUtils.lerp(
+            //     cardRef.current.rotation.y,
+            //     targetY,
+            //     0.1
+            // );
         }
     });
 
     return (
         <group
+            {...props}
             ref={cardRef}
             onPointerMove={(e) => {
                 // Получаем нормализованные координаты указателя
@@ -130,7 +132,7 @@ const DevCard = () => {
     );
 };
 
-const DevCardWithSuspense = () => (
+const DevCardWithSuspense = (props) => (
     <Suspense
         fallback={
             <Html center>
@@ -138,7 +140,7 @@ const DevCardWithSuspense = () => (
             </Html>
         }
     >
-        <DevCard />
+        <DevCard {...props} />
     </Suspense>
 );
 

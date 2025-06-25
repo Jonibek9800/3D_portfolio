@@ -2,6 +2,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Container from "../Container/Container";
 import Home from "../../pages/Home";
 import styles from "./Hrader.module.css";
+import CssGamePlatform from "../../pages/CssGamePlatform/CssGamePlatform";
 
 const Header = () => {
     return (
@@ -55,7 +56,7 @@ const Header = () => {
                 </header>
             </Container>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<CssGamePlatform />} />
                 <Route path="/contacts" element={"Contacts"} />
             </Routes>
         </>
