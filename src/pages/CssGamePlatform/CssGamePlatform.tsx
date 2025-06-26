@@ -9,6 +9,8 @@ import DevCardWithSuspense from "../../components/DevCard/DevCard";
 import SkillGroups from "../../components/SkillGroups/SkillGroups";
 
 import { RigidBody } from "@react-three/rapier";
+import Three from "../../components/Three/Three";
+import { Vector3 } from "three";
 
 export function Plane() {
     return (
@@ -34,13 +36,20 @@ const Cube = forwardRef((props, ref) => {
 
     return (
         <RigidBody ref={cubeRef} position={[0, 0, 0]} mass={1} {...props}>
-            {/* <mesh castShadow>
-                <boxGeometry />
-                <meshStandardMaterial color="red" />
-            </mesh> */}
             <Gltf src="/car.glb" />
         </RigidBody>
     );
+});
+
+function getRandomFloat(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+const randomThreeObjects = Array.from({ length: 100 }, (_, index) => {
+    const position = new Vector3(getRandomFloat(-100, 100), -3, getRandomFloat(-100, 100));
+    const scale = getRandomFloat(5, 15);
+
+    return <Three key={index} position={position.toArray()} scale={scale} />;
 });
 
 export default function CssGamePlatform() {
@@ -69,11 +78,10 @@ export default function CssGamePlatform() {
 
             <Suspense fallback={null}>
                 <Sky />
-                {/* <OrbitControls /> */}
                 <SkillGroups position={[7, 0, 9]} />
                 <DevCardWithSuspense position={[-30, 5, 30]} />
+                {randomThreeObjects}
                 <Physics timeStep="vary" gravity={[0, -9.81, 0]}>
-                    {/* <FirstPersonControls /> */}
                     <KeyboardControls map={keyboardMap}>
                         <Controller maxVelLimit={5}>
                             <Cube />
