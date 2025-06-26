@@ -1,6 +1,6 @@
 // App.jsx
 // import { Physics, useBox, usePlane } from "@react-three/cannon";
-import { KeyboardControls, Sky } from "@react-three/drei";
+import { Gltf, KeyboardControls, Sky } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { CuboidCollider, Physics } from "@react-three/rapier";
 import Controller from "ecctrl";
@@ -34,10 +34,11 @@ const Cube = forwardRef((props, ref) => {
 
     return (
         <RigidBody ref={cubeRef} position={[0, 0, 0]} mass={1} {...props}>
-            <mesh castShadow>
+            {/* <mesh castShadow>
                 <boxGeometry />
                 <meshStandardMaterial color="red" />
-            </mesh>
+            </mesh> */}
+            <Gltf src="/car.glb" />
         </RigidBody>
     );
 });
@@ -69,7 +70,7 @@ export default function CssGamePlatform() {
             <Suspense fallback={null}>
                 <Sky />
                 {/* <OrbitControls /> */}
-                <SkillGroups />
+                <SkillGroups position={[7, 0, 9]} />
                 <DevCardWithSuspense position={[-30, 5, 30]} />
                 <Physics timeStep="vary" gravity={[0, -9.81, 0]}>
                     {/* <FirstPersonControls /> */}

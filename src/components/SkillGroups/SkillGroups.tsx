@@ -12,10 +12,10 @@ const skillModels = [
     { url: "/Zustand.glb", key: "zustandScene" },
 ];
 
-const SkillGroups = () => {
+const SkillGroups = (props) => {
     const scenes = Object.fromEntries(skillModels.map(({ url, key }) => [key, useGLTF(url).scene]));
     return (
-        <group>
+        <group {...props}>
             <SkillBoxWithSuspence
                 emmisivColor="#eb5b34"
                 scene={scenes.htmlScene}
