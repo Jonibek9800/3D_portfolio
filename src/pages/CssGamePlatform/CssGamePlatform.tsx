@@ -1,16 +1,17 @@
 // App.jsx
 // import { Physics, useBox, usePlane } from "@react-three/cannon";
-import { Gltf, KeyboardControls, Sky } from "@react-three/drei";
+import { Gltf, KeyboardControls, Sky, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { CuboidCollider, Physics } from "@react-three/rapier";
 import Controller from "ecctrl";
-import { Suspense, forwardRef, useImperativeHandle, useRef } from "react";
+import { Suspense, forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import DevCardWithSuspense from "../../components/DevCard/DevCard";
 import SkillGroups from "../../components/SkillGroups/SkillGroups";
 
 import { RigidBody } from "@react-three/rapier";
 import Three from "../../components/Three/Three";
 import { Vector3 } from "three";
+import Stone from "../../components/Stone/Stone";
 
 export function Plane() {
     return (
@@ -30,13 +31,14 @@ export function Plane() {
 
 const Cube = forwardRef((props, ref) => {
     const cubeRef = useRef();
-
+    const { scene, animations } = useGLTF("/car.glb");
     // Прокидываем ref наружу
     useImperativeHandle(ref, () => ({ ref: cubeRef, api: cubeRef.current }));
-
+    useEffect(() => {
+    }, []);
     return (
         <RigidBody ref={cubeRef} position={[0, 0, 0]} mass={1} {...props}>
-            <Gltf src="/car.glb" />
+            <primitive object={scene} />
         </RigidBody>
     );
 });
@@ -45,11 +47,13 @@ function getRandomFloat(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-const randomThreeObjects = Array.from({ length: 100 }, (_, index) => {
-    const position = new Vector3(getRandomFloat(-100, 100), -3, getRandomFloat(-100, 100));
+const randomThreeObjects = Array.from({ length: 50 }, (_, index) => {
+    const position = new Vector3(getRandomFloat(-80, 80), -3, getRandomFloat(-80, 80));
     const scale = getRandomFloat(5, 15);
 
-    return <Three key={index} position={position.toArray()} scale={scale} />;
+    return (
+            <Three key={index} position={position.toArray()} scale={scale} />
+    );
 });
 
 export default function CssGamePlatform() {
@@ -79,9 +83,10 @@ export default function CssGamePlatform() {
             <Suspense fallback={null}>
                 <Sky />
                 <SkillGroups position={[7, 0, 9]} />
-                <DevCardWithSuspense position={[-30, 5, 30]} />
-                {randomThreeObjects}
+                <DevCardWithSuspense position={[-30, 0, 30]} />
                 <Physics timeStep="vary" gravity={[0, -9.81, 0]}>
+                    {randomThreeObjects}
+                    <Stone scale={5} position={[0, -3, 10]} />
                     <KeyboardControls map={keyboardMap}>
                         <Controller maxVelLimit={5}>
                             <Cube />
