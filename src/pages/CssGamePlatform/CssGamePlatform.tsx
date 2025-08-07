@@ -1,6 +1,13 @@
 // App.jsx
 // import { Physics, useBox, usePlane } from "@react-three/cannon";
-import { Gltf, KeyboardControls, Sky, useGLTF } from "@react-three/drei";
+import {
+    Gltf,
+    KeyboardControls,
+    OrbitControls,
+    Sky,
+    useAnimations,
+    useGLTF,
+} from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { CuboidCollider, Physics } from "@react-three/rapier";
 import Controller from "ecctrl";
@@ -16,7 +23,7 @@ import Stone from "../../components/Stone/Stone";
 export function Plane() {
     return (
         <>
-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3, 0]} receiveShadow>
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 1, 0]} receiveShadow>
                 <planeGeometry args={[1000, 1000]} />
                 <meshStandardMaterial color="green" />
             </mesh>
@@ -31,15 +38,14 @@ export function Plane() {
 
 const Cube = forwardRef((props, ref) => {
     const cubeRef = useRef();
-    const { scene, animations } = useGLTF("/car.glb");
+    const { scene } = useGLTF("/car.glb");
     // Прокидываем ref наружу
+
     useImperativeHandle(ref, () => ({ ref: cubeRef, api: cubeRef.current }));
-    useEffect(() => {
-    }, []);
     return (
-        <RigidBody ref={cubeRef} position={[0, 0, 0]} mass={1} {...props}>
-            <primitive object={scene} />
-        </RigidBody>
+        // <RigidBody ref={cubeRef} mass={1} {...props}>
+        <primitive object={scene} />
+        // </RigidBody>
     );
 });
 
@@ -48,11 +54,13 @@ function getRandomFloat(min, max) {
 }
 
 const randomThreeObjects = Array.from({ length: 50 }, (_, index) => {
-    const position = new Vector3(getRandomFloat(-80, 80), -3, getRandomFloat(-80, 80));
+    const position = new Vector3(getRandomFloat(-80, 80), 1, getRandomFloat(-80, 80));
     const scale = getRandomFloat(5, 15);
 
     return (
-            <Three key={index} position={position.toArray()} scale={scale} />
+        <RigidBody key={index} type="fixed">
+            <Three position={position.toArray()} scale={scale} />
+        </RigidBody>
     );
 });
 
@@ -81,8 +89,9 @@ export default function CssGamePlatform() {
             <directionalLight position={[5, 10, 5]} intensity={1} castShadow />
 
             <Suspense fallback={null}>
-                <Sky />
-                <SkillGroups position={[7, 0, 9]} />
+                <Sky />|
+                <SundukWithAnimation scale={1} position={[2, 2, 0]} />
+                <SkillGroups position={[7, 4, 9]} />
                 <DevCardWithSuspense position={[-30, 0, 30]} />
                 <Physics timeStep="vary" gravity={[0, -9.81, 0]}>
                     {randomThreeObjects}
@@ -94,7 +103,26 @@ export default function CssGamePlatform() {
                     </KeyboardControls>
                     <Plane />
                 </Physics>
+                {/* <OrbitControls /> */}
             </Suspense>
         </Canvas>
+    );
+}
+
+function SundukWithAnimation(props) {
+    const group = useRef(null);
+    const { scene, animations } = useGLTF("/sunduk.glb");
+    const { actions } = useAnimations(animations, group);
+
+    useEffect(() => {
+        if (actions && actions["krishkaAction"]) {
+            // actions["krishkaAction"].play(); // Название анимации из Blender (можно узнать через gltf-viewer или console.log)
+        }
+    }, [actions]);
+
+    return (
+        <group ref={group} {...props}>
+            <primitive object={scene} />
+        </group>
     );
 }

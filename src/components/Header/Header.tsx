@@ -56,7 +56,7 @@ const Header = () => {
                 </header>
             </Container>
             <Routes>
-                <Route path="/" element={<CssGamePlatform />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/contacts" element={"Contacts"} />
             </Routes>
         </>

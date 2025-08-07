@@ -1,8 +1,8 @@
-import { OrbitControls, Sky, Stars, useGLTF } from "@react-three/drei";
+import { OrbitControls, Sky, Stars, useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Mail } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Container from "../components/Container/Container";
 import DevCardWithSuspense from "../components/DevCard/DevCard";
 import Footer from "../components/Footer/Footer";
@@ -13,6 +13,7 @@ import { learningInfo } from "../utils/constans";
 import styles from "./Home.module.css";
 import RotatingGroup from "../components/RotationGroup/RotationGroup";
 import { useNavigate } from "react-router-dom";
+import { LoopOnce } from "three";
 
 const skillModels = [
     { url: "/HTML.glb", key: "htmlScene" },
@@ -37,13 +38,15 @@ const Home = () => {
                     <h1 className={styles.header_title}>Developer</h1>
                 </div>
 
-                <Suspense fallback="Loading..">
-                    <Canvas
-                        camera={{ fov: 75, position: [0, 1, 5] }}
-                        style={{ height: "100vh", borderRadius: "25%" }}
-                    >
-                        <DevCardWithSuspense />
-                        <mesh
+                {/* <Suspense fallback="Loading.."> */}
+                <Canvas
+                    camera={{ fov: 35, position: [0, 1, 5] }}
+                    style={{ height: "100vh", borderRadius: "25%" }}
+                >
+                    {/* <DevCardWithSuspense /> */}
+                    <SundukWithAnimation rotation={[0, -1.6, 0]} />
+
+                    {/* <mesh
                             castShadow
                             receiveShadow
                             position={[0, -3, 0]}
@@ -51,12 +54,13 @@ const Home = () => {
                         >
                             <planeGeometry args={[30, 30]} />
                             <meshStandardMaterial color="#9dfaf5" />
-                        </mesh>
-                        <Sky />
-                        <ambientLight intensity={3} />
-                        <directionalLight intensity={0.5} />
-                    </Canvas>
-                </Suspense>
+                        </mesh> */}
+                    <OrbitControls />
+                    <Sky />
+                    <ambientLight intensity={3} />
+                    <directionalLight intensity={0.5} />
+                </Canvas>
+                {/* </Suspense> */}
 
                 <section className={styles.info_section_wrap}>
                     <div className={styles.info_left_block_wrap}>
@@ -115,11 +119,11 @@ const Home = () => {
                     </p>
 
                     <div style={{ marginTop: 200 }}>
-                        <Canvas style={{ height: "100vh", width: 700, margin: "auto" }}>
+                        {/* <Canvas style={{ height: "100vh", width: 700, margin: "auto" }}>
                             <HackerRoom />
                             <ambientLight intensity={0.5} />
                             <directionalLight intensity={1.5} position={[5, 5, 5]} />
-                        </Canvas>
+                        </Canvas> */}
                     </div>
                 </Container>
             </section>
@@ -140,7 +144,7 @@ const Home = () => {
                         I am striving to never stop learning and improving
                     </p>
 
-                    <Suspense fallback="Loading...">
+                    {/* <Suspense fallback="Loading...">
                         <Canvas
                             camera={{ position: [0, 2, 7], fov: 20 }}
                             style={{
@@ -205,12 +209,7 @@ const Home = () => {
                                                     textureUrl="./src/assets/icons/next.js_logo.png"
                                                     skillName="Next.js"
                                                 />
-                                                {/* <SkillBox
-                                                    scale={1}
-                                                    position={[-7, -2, 0]}
-                                                    textureUrl="./src/assets/icons/sass_logo.png"
-                                                    skillName="Sass"
-                                                /> */}
+                                                
                                                 <SkillBox
                                                     scene={scenes.tsScene}
                                                     glow
@@ -253,7 +252,7 @@ const Home = () => {
                                 />
                             </EffectComposer>
                         </Canvas>
-                    </Suspense>
+                    </Suspense> */}
                 </div>
             </section>
 
@@ -287,3 +286,49 @@ const Home = () => {
 };
 
 export default Home;
+
+function SundukWithAnimation(props) {
+    const group = useRef(null);
+    const [opened, setOpened] = useState(false);
+
+    const { scene, animations } = useGLTF("/sunduk.glb");
+    const { actions } = useAnimations(animations, group);
+
+    useEffect(() => {
+        if (actions["krishkaAction"]) {
+            actions["krishkaAction"].setLoop(LoopOnce); // проиграть один раз
+            actions["krishkaAction"].clampWhenFinished = true; // зафиксироваться в финальном кадре
+            actions["krishkaAction"].enabled = true; // активировать
+        }
+    }, [actions]);
+
+    const handleOpen = () => {
+        const action = actions["krishkaAction"];
+        if (!action) return;
+
+        if (opened) {
+            // Реверс (закрыть)
+            action.paused = false;
+            action.timeScale = -1; // обратное воспроизведение
+            // action.reset();
+            action.play();
+        } else {
+            // Прямое (открыть)
+            action.reset();
+            action.timeScale = 1;
+            action.play();
+        }
+
+        setOpened(!opened);
+    };
+
+    return (
+        <group ref={group} {...props}>
+            <primitive object={scene} />
+            <mesh position={[0, 0.5, 0]} scale={0.2} onClick={handleOpen}>
+                <boxGeometry />
+                <meshStandardMaterial color={"red"} />
+            </mesh>
+        </group>
+    );
+}
